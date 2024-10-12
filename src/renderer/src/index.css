@@ -1,0 +1,16 @@
+.ant-list-items {
+  overflow: auto;
+  height: 400px;
+}
+
+.group-item-active {
+  background-color: #11b86d;
+  
+  color: #fff !important;
+}
+
+.repo-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
