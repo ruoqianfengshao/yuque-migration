@@ -6,7 +6,8 @@ type ConfigInfo = {
   value?: string
 }
 
-export const ConfigInfoContext = createContext<ConfigInfo>({})
+const defaultConfig = await window.api.getConfig()
+export const ConfigInfoContext = createContext<ConfigInfo>(defaultConfig)
 export const ConfigInfoProvider = ConfigInfoContext.Provider
 
 export const useConfigInfoContext = () => {

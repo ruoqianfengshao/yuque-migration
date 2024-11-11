@@ -1,12 +1,15 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { getConfig } from '../main/service'
 
 // Custom APIs for renderer
 const api = {
   getGroups: (): Promise<any> => ipcRenderer.invoke('getGroups'),
   getRepos: (groupId: number): Promise<any> => ipcRenderer.invoke('getRepos', groupId),
   downloadRepos: (repoUrl: string): Promise<any> => ipcRenderer.invoke('downloadRepos', repoUrl),
-  saveConfig: (config: any): Promise<void> => ipcRenderer.invoke('saveConfig', config)
+  saveConfig: (config: any): Promise<void> => ipcRenderer.invoke('saveConfig', config),
+  getConfig: (): Promise<void> => ipcRenderer.invoke('getConfig'),
+  importBook: (props: any): Promise<any> => ipcRenderer.invoke('importBook', props)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

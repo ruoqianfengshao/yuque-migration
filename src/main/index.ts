@@ -2,7 +2,8 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { downloadRepos, getGroups, getRepos, saveConfig } from './service'
+import { downloadRepos, getConfig, getGroups, getRepos, saveConfig } from './service'
+import { importBook } from './import'
 
 function createWindow(): void {
   // Create the browser window.
@@ -54,6 +55,8 @@ app.whenReady().then(() => {
   ipcMain.handle('getRepos', (_, groupId) => getRepos(groupId))
   ipcMain.handle('downloadRepos', (_, repo) => downloadRepos(repo))
   ipcMain.handle('saveConfig', (_, config) => saveConfig(config))
+  ipcMain.handle('getConfig', () => getConfig())
+  ipcMain.handle('importBook', (_, props) => importBook(props))
 
   createWindow()
 
