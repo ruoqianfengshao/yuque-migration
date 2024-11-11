@@ -58,7 +58,6 @@ export const importBook = async ({ group, book }) => {
       const parentTitle = item.pathTitleList.slice(0, item.pathTitleList.length - 1).join('/')
       const parentNode = newTocMap[parentTitle]
 
-      console.log(parentTitle, title, parentNode?.uuid)
       if (newTocMap[title]) {
         continue
       }
