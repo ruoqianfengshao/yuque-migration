@@ -4,6 +4,7 @@ import {
   createBook,
   createGroup,
   createToc,
+  getBookToc,
   getOrgData,
   getTargetGroups,
   getTargetRepos,
@@ -11,6 +12,7 @@ import {
 } from '../service'
 import { Toc, ProgressItem } from './type'
 import path from 'node:path'
+import { createTocMap } from './utils'
 
 /**
  * 导入的思路大概是这样
@@ -22,7 +24,7 @@ import path from 'node:path'
 export const importBook = async ({ group, book }) => {
   try {
     await getOrgData()
-    const newTocMap: Record<string, Toc | undefined> = {}
+    let newTocMap: Record<string, Record<string, any> | undefined> = {}
     const groups = await getTargetGroups()
 
     const isExistGroup = groups.data.find((i) => i.name === group.name)
@@ -52,20 +54,24 @@ export const importBook = async ({ group, book }) => {
       fs.readFileSync(`${baseDir}/progress.json`, 'utf-8')
     )
 
+    // 支持增量更新
+    const originBookToc = await getBookToc(bookId)
+    newTocMap = createTocMap(originBookToc.data.toc)
+
     // 基于目录结构创建目录和文件
     for (const item of progressJson) {
       const title = item.pathTitleList.join('/')
       const parentTitle = item.pathTitleList.slice(0, item.pathTitleList.length - 1).join('/')
       const parentNode = newTocMap[parentTitle]
 
-      if (newTocMap[title]) {
+      if (newTocMap[title] || newTocMap[title.replaceAll('&', '&amp;')]) {
         continue
       }
 
       if (item.toc.type === 'DOC') {
         await uploadLakeFile({
           bookId,
-          title: item.toc.title,
+          title: item.pathTitleList.slice(-1)[0],
           type: item.path.split('.').slice(-1)[0],
           filePath: path.join(`${baseDir}/${item.path}`),
           targetUuid: parentNode?.uuid,
@@ -73,9 +79,6 @@ export const importBook = async ({ group, book }) => {
           createFrom: parentNode?.type === 'DOC' ? 'doc_toc' : 'import'
         })
           .then((res) => {
-            if (item.toc.title === '集群公网域名') {
-              console.log('res', res.data)
-            }
             newTocMap[title] = res.data
           })
           .catch((e) => {
@@ -87,7 +90,7 @@ export const importBook = async ({ group, book }) => {
       if (item.toc.type === 'TITLE') {
         await createToc({
           bookId,
-          title: item.toc.title,
+          title: item.pathTitleList.slice(-1)[0],
           type: item.toc.type,
           parentNodeUuid: parentNode?.uuid
         }).then(({ data }) => {

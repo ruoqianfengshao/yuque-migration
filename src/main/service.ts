@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { app } from 'electron'
-import zip from 'adm-zip'
 import fs from 'node:fs'
 import { Toc } from './import/type'
 import path from 'node:path'
@@ -132,9 +131,6 @@ export const downloadRepos = async (repo: Record<string, any>) => {
       tableExportType: 'laketable',
       ctoken: store.ctoken
     })
-    const newZip = new zip()
-    newZip.addLocalFolder(renameFolderName(`${downloadPath}/${repo.name}`))
-    await newZip.writeZipPromise(renameFolderName(`${downloadPath}/${repo.name}.zip`))
     return { message: `已下载至 下载/${repo.user.name}/${repo.name}`, status: 'success' }
   } catch (error) {
     console.log('error: ', error)
@@ -321,19 +317,25 @@ export const uploadLakeFile = async ({
   formData.append('book_id', bookId as unknown as string)
   formData.append('type', type)
   formData.append('import_type', 'create')
-  formData.append('filename', 'file')
-  const filename = filePath.split('/').pop()
-  const fileContent = fs.readFileSync(filePath)
+  const filename = filePath.split('/').pop()?.replaceAll(' ', '')
 
+  formData.append('filename', filename!)
+  const fileContent = fs.readFileSync(filePath, { encoding: 'utf-8' })
   if (fileContent.length) {
-    const fileBlob = new Blob([fileContent])
-    formData.append('file', fileBlob, filename)
+    const fileBlob = new Blob([fileContent], { type: 'text/plain' })
+    formData.append('file', fileBlob, filename!)
     return targetRequest.post(`/api/import?ctoken=${store.ctoken}`, formData).then(async (doc) => {
       return getBookToc(bookId).then((res) => {
+        const toc = res.data.toc.find((i) => {
+          return (
+            i.parent_uuid == targetUuid &&
+            (i.title === title ||
+              i.title.replaceAll(' ', '') === title?.replaceAll('&', '&amp;').replaceAll(' ', ''))
+          )
+        })
+
         return {
-          data: res.data.toc.find((i) => {
-            return i.parent_uuid === targetUuid && i.title === title
-          })
+          data: toc
         }
       })
     })
