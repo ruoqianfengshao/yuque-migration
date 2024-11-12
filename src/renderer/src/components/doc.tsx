@@ -15,7 +15,7 @@ export const useDocDrawer = () => {
         <Title level={1}>语雀迁移工具操作手册</Title>
         <Title level={3}>简介</Title>
         <Paragraph>
-          本工具实现通过模拟用户操作语雀 api 实现导入导出功能，支持知识库下载和迁移
+          本工具通过模拟用户操作语雀 api 实现导入导出功能，支持语雀知识库下载和迁移
         </Paragraph>
         <Title level={3}>注意事项（必看）</Title>
         <Paragraph>
@@ -50,7 +50,12 @@ export const useDocDrawer = () => {
           </Text>
         </Paragraph>
         <Paragraph>
-          <Text>7. 有其他使用问题，请联系王凯凯（笑武）</Text>
+          <Text>
+            7. 当前版本（1.1.0）会忽略空的文档，如果发现文档未同步请确定文档是否已经发布并且有内容
+          </Text>
+        </Paragraph>
+        <Paragraph>
+          <Text>8. 有其他使用问题，请联系王凯凯（笑武）</Text>
         </Paragraph>
         <Title level={3}>开始使用</Title>
         <Paragraph>

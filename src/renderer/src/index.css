@@ -9,6 +9,12 @@
   color: #fff !important;
 }
 
+.ant-list-header {
+  background-color: rgb(245, 249, 255) !important;
+  border-top-right-radius: 6px !important;
+  border-top-left-radius: 6px !important;
+}
+
 .repo-header {
   display: flex;
   flex-direction: row;

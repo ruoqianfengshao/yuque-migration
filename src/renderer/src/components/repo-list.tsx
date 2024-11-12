@@ -110,9 +110,6 @@ export const RepoList = (props: RepoListProps) => {
               console.log('upload fail', newResultMap)
               setStatusMap(newResultMap)
             })
-            .finally(() => {
-              setLoading(false)
-            })
         }
       })
       .catch((e) => {
@@ -141,40 +138,38 @@ export const RepoList = (props: RepoListProps) => {
         dataSource={data}
         renderItem={(item: any) => {
           return (
-            <Spin spinning={statusMap[item.id]?.status === 'downloading'}>
-              <List.Item>
-                <List.Item.Meta
-                  avatar={<DownloadIcon status={statusMap[item.id]?.status}></DownloadIcon>}
-                  title={item.name}
-                  description={
-                    statusMap[item.id]?.status === 'failed' ? (
-                      <>
-                        失败原因：{statusMap[item.id]?.message}
-                        <br />
-                        请检查文档内容并手动下载
-                      </>
-                    ) : (
-                      statusMap[item.id]?.message
-                    )
-                  }
-                ></List.Item.Meta>
-                <Space>
-                  <Tooltip title="仅下载">
-                    <Button
-                      type="primary"
-                      icon={<DownloadOutlined />}
-                      size="small"
-                      onClick={() => handleDownload(item)}
-                    />
-                  </Tooltip>
-                  <Tooltip title="下载并导入">
-                    <Button type="primary" size="small" onClick={() => handleImport(item)}>
-                      迁移
-                    </Button>
-                  </Tooltip>
-                </Space>
-              </List.Item>
-            </Spin>
+            <List.Item>
+              <List.Item.Meta
+                avatar={<DownloadIcon status={statusMap[item.id]?.status}></DownloadIcon>}
+                title={item.name}
+                description={
+                  statusMap[item.id]?.status === 'failed' ? (
+                    <>
+                      失败原因：{statusMap[item.id]?.message}
+                      <br />
+                      请检查文档内容并手动下载
+                    </>
+                  ) : (
+                    statusMap[item.id]?.message
+                  )
+                }
+              ></List.Item.Meta>
+              <Space>
+                <Tooltip title="仅下载">
+                  <Button
+                    type="primary"
+                    icon={<DownloadOutlined />}
+                    size="small"
+                    onClick={() => handleDownload(item)}
+                  />
+                </Tooltip>
+                <Tooltip title="下载并导入">
+                  <Button type="primary" size="small" onClick={() => handleImport(item)}>
+                    迁移
+                  </Button>
+                </Tooltip>
+              </Space>
+            </List.Item>
           )
         }}
       />
