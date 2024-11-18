@@ -10,9 +10,9 @@ import {
   getTargetRepos,
   uploadLakeFile
 } from '../service'
-import { Toc, ProgressItem } from './type'
+import { ProgressItem } from './type'
 import path from 'node:path'
-import { createTocMap } from './utils'
+import { createTocMap, fixPath } from './utils'
 
 /**
  * 导入的思路大概是这样
@@ -87,15 +87,19 @@ export const importBook = async ({ group, book }) => {
           })
       }
 
-      if (item.toc.type === 'TITLE') {
+      if (item.toc.type === 'TITLE' || item.toc.type === 'LINK') {
         await createToc({
           bookId,
           title: item.pathTitleList.slice(-1)[0],
           type: item.toc.type,
           parentNodeUuid: parentNode?.uuid
-        }).then(({ data }) => {
-          newTocMap[title] = data
         })
+          .then(({ data }) => {
+            newTocMap[title] = data
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
     }
     console.log('success')

@@ -3,6 +3,7 @@ import { app } from 'electron'
 import fs from 'node:fs'
 import { Toc } from './import/type'
 import path from 'node:path'
+import { fixPath } from './import/utils'
 
 type Store = {
   domain?: string
@@ -28,6 +29,7 @@ type TocProps = {
   parentNodeUuid?: string
   title: string
   type: string
+  url?: string
 }
 
 type ImportFileProps = {
@@ -44,10 +46,6 @@ type ImportFileProps = {
 const store: Store = {} as Store
 
 const orgMap = {}
-
-const renameFolderName = (name: string) => {
-  return name.split(' ').join('')
-}
 
 const request = axios.create({})
 
@@ -231,7 +229,7 @@ export const createBook = ({ groupId, name }) => {
     })
 }
 
-export const createToc = ({ bookId, parentNodeUuid, title, type }: TocProps) => {
+export const createToc = ({ bookId, parentNodeUuid, title, type, url }: TocProps) => {
   return targetRequest
     .put('/api/catalog_nodes', {
       book_id: bookId,
@@ -239,45 +237,18 @@ export const createToc = ({ bookId, parentNodeUuid, title, type }: TocProps) => 
       target_uuid: parentNodeUuid,
       action: 'append',
       type,
-      title
+      title,
+      url
     })
     .then((res) => {
       const node = res.data.data.find(
         (i) =>
           i.title === title &&
           (parentNodeUuid == i.parent_uuid || !parentNodeUuid) &&
-          i.type === 'TITLE'
+          i.type === type
       )
       return { data: node }
     })
-}
-
-export const importZip = async ({ bookId, filePath }) => {
-  const formData = new FormData()
-
-  formData.append('append_to_catalog', true)
-  formData.append('action', 'appendChild')
-  formData.append('book_id', bookId)
-  formData.append('type', 'zip')
-  formData.append('import_type', 'create')
-  formData.append(
-    'options',
-    JSON.stringify({
-      fileFormat: 'markdown',
-      overrideExistsNode: true,
-      useFilenameAsTitle: true,
-      isGBK: false,
-      enableLatex: 1
-    })
-  )
-  formData.append('filename', 'file')
-  const filename = filePath.split('/').pop()
-  const fileContent = new Blob([fs.readFileSync(filePath)])
-  formData.append('file', fileContent, filename)
-  return targetRequest.post(`/api/import?ctoken=${store.ctoken}`, formData).then((res) => {
-    console.log('importZip', res.data.data.id)
-    return res.data.book_id
-  })
 }
 
 export const getBookToc = (bookId: number): Promise<{ data: { toc: Toc[] } }> => {
@@ -317,20 +288,21 @@ export const uploadLakeFile = async ({
   formData.append('book_id', bookId as unknown as string)
   formData.append('type', type)
   formData.append('import_type', 'create')
-  const filename = filePath.split('/').pop()?.replaceAll(' ', '')
+  const filename = `${title}.${type}`
 
-  formData.append('filename', filename!)
+  formData.append('filename', 'file')
+  formData.append('title', title!)
   const fileContent = fs.readFileSync(filePath, { encoding: 'utf-8' })
   if (fileContent.length) {
     const fileBlob = new Blob([fileContent], { type: 'text/plain' })
     formData.append('file', fileBlob, filename!)
+    console.log(filename, targetUuid, createFrom)
     return targetRequest.post(`/api/import?ctoken=${store.ctoken}`, formData).then(async (doc) => {
       return getBookToc(bookId).then((res) => {
         const toc = res.data.toc.find((i) => {
           return (
-            i.parent_uuid == targetUuid &&
-            (i.title === title ||
-              i.title.replaceAll(' ', '') === title?.replaceAll('&', '&amp;').replaceAll(' ', ''))
+            (i.parent_uuid == targetUuid || !targetUuid) &&
+            fixPath(i.title) === fixPath(title!).replaceAll('&', '&amp;')
           )
         })
 

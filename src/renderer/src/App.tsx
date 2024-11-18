@@ -45,7 +45,10 @@ function App(): JSX.Element {
         </Space>
         <ReadOutlined onClick={handleDocOpen} />
       </Title>
-      <Alert message={'先点击阅读右侧操作手册，再点击标题旁边的配置按钮进行配置'} type="error" />
+      <Alert
+        message={'重要！！！请先点击阅读右侧操作手册，再点击标题旁的配置按钮开始使用'}
+        type="error"
+      />
       <br></br>
       <Row gutter={12}>
         <Col span={12}>
