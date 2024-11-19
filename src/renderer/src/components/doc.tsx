@@ -25,7 +25,7 @@ export const useDocDrawer = () => {
           </Text>
         </Paragraph>
         <Paragraph>
-          <Text>2. 当前版本（1.2.0）不支持视频自动上传，连接阿里郎后，会把视频下载到本地目录</Text>
+          <Text>2. 当前版本（1.2.0）不支持视频自动上传，连接内网后，会把视频下载到本地目录</Text>
         </Paragraph>
         <Paragraph>
           <Text>
@@ -41,7 +41,10 @@ export const useDocDrawer = () => {
           </Text>
         </Paragraph>
         <Paragraph>
-          <Text>5. 本工具会对部分标题空格做处理，迁移后可能会发现某些文档标题的空格丢失</Text>
+          <Text strong>
+            5.
+            如果发现迁移后知识库生成，但是没有文档，请先确认打开原语雀文档是否有导出按钮，如果没有导出，说明当前用户没有导出权限，不可下载文档
+          </Text>
         </Paragraph>
         <Paragraph>
           <Text>

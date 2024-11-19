@@ -1,6 +1,6 @@
 # yuque-migration
 
-An Electron application with React and TypeScript
+语雀迁移工具，支持从一个语雀组织迁移到另一个语雀组织
 
 ## Recommended IDE Setup
 
@@ -32,5 +32,3 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
-
-2f759148-7d69-4ed6-8025-ab3fa1f49c01
