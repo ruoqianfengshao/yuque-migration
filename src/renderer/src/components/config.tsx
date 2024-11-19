@@ -57,7 +57,13 @@ export const useConfigModal = (props: ConfigModalProps) => {
             <Item
               name="domain"
               label="语雀组织域名"
-              rules={[{ required: true, message: '请输入语雀组织域名' }]}
+              rules={[
+                { required: true, message: '请输入语雀组织域名' },
+                {
+                  pattern: /^https:\/\/((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,16}$/,
+                  message: '域名格式不正确'
+                }
+              ]}
             >
               <Input placeholder="请输入域名域名"></Input>
             </Item>
@@ -101,7 +107,13 @@ export const useConfigModal = (props: ConfigModalProps) => {
             <Item
               name="targetDomain"
               label="语雀域名"
-              rules={[{ required: true, message: '请输入语雀域名' }]}
+              rules={[
+                { required: true, message: '请输入语雀域名' },
+                {
+                  pattern: /^https:\/\/((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,16}$/,
+                  message: '域名格式不正确'
+                }
+              ]}
             >
               <Input placeholder="请输入域名域名"></Input>
             </Item>
