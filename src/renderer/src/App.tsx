@@ -25,7 +25,7 @@ function App(): JSX.Element {
     window.api.saveConfig(data)
     setConfig(data)
   }
-  const { open, dom } = useConfigModal({ onOk: handleConfigSubmit })
+  const { open, dom } = useConfigModal({ onOk: handleConfigSubmit, config })
   const { open: openDoc, dom: docDom } = useDocDrawer()
 
   const handleGroupClick = (data) => {

@@ -1,6 +1,5 @@
 import { Col, Divider, Form, Image, Input, Modal, Popover, Row, Typography } from 'antd'
 import { useState } from 'react'
-import { useConfigInfoContext } from './context'
 import originSessionImg from '../assets/session值.png'
 import originCtokenImg from '../assets/取授权码.png'
 import targetSessionImg from '../assets/目标语雀 session 值.png'
@@ -10,23 +9,33 @@ const { Item } = Form
 
 type ConfigModalProps = {
   onOk?: (data) => void
+  config: Record<string, string>
 }
 export const useConfigModal = (props: ConfigModalProps) => {
-  const { onOk } = props
+  const { onOk, config } = props
   const [open, setOpen] = useState<boolean>(false)
   const [form] = Form.useForm()
-  const config = useConfigInfoContext()
 
   const handleOpen = (visible) => {
     setOpen(visible)
     setTimeout(() => {
-      form.setFieldsValue(config)
+      if (config) {
+        form.setFieldsValue(config)
+      } else {
+        form.setFieldsValue({
+          domain: 'https://aliyuque.antfin.com',
+          token: 'ALIPAYCHAIRBUCJSESSIONID',
+          targetDomain: 'https://terminuscloud.yuque.com',
+          targetToken: '_yuque_session'
+        })
+      }
     }, 500)
   }
 
   const handleOk = () => {
     form.validateFields().then((values) => {
       onOk?.(values)
+      console.log('values', values)
       setOpen(false)
     })
   }
@@ -41,16 +50,7 @@ export const useConfigModal = (props: ConfigModalProps) => {
       onOk={handleOk}
       onCancel={() => setOpen(false)}
     >
-      <Form
-        layout="vertical"
-        initialValues={{
-          domain: 'https://aliyuque.antfin.com',
-          token: 'ALIPAYCHAIRBUCJSESSIONID',
-          targetDomain: 'https://terminuscloud.yuque.com',
-          targetToken: '_yuque_session'
-        }}
-        form={form}
-      >
+      <Form layout="vertical" form={form}>
         <Row>
           <Col flex={1}>
             <Title level={3}>原语雀配置</Title>

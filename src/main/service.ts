@@ -137,10 +137,10 @@ export const downloadRepos = async (repo: Record<string, any>) => {
       return { message: '登录失败，请检查语雀配置', status: 'failed' }
     }
 
-    if (err.includes('toc')) {
+    if (err.includes('No found toc list')) {
       return { message: '知识库没有内容', status: 'failed' }
     }
-    return { message: '下载失败', status: 'failed' }
+    return { message: `下载失败: ${error}`, status: 'failed' }
   }
 }
 

@@ -4,6 +4,11 @@ type ConfigInfo = {
   domain?: string
   token?: string
   value?: string
+  ctoken?: string
+  targetDomain?: string
+  targetToken?: string
+  targetValue?: string
+  targetCtoken?: string
 }
 
 const defaultConfig = await window.api.getConfig()

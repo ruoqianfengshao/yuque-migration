@@ -60,6 +60,7 @@ export const RepoList = (props: RepoListProps) => {
   }
 
   const handleDownloadAll = async () => {
+    setLoading(true)
     for (const item of data) {
       const newMap = { [item.id]: { status: 'downloading', message: '下载中...' }, ...statusMap }
       setStatusMap(newMap)
@@ -69,9 +70,10 @@ export const RepoList = (props: RepoListProps) => {
         setStatusMap(newResultMap)
       })
     }
+    setLoading(false)
   }
 
-  const handleDownload = async (item) => {
+  const downloadRepo = async (item) => {
     const newMap = { [item.id]: { status: 'downloading', message: '下载中...' }, ...statusMap }
     setStatusMap(newMap)
     return await window.api.downloadRepos(item).then((res) => {
@@ -82,9 +84,16 @@ export const RepoList = (props: RepoListProps) => {
     })
   }
 
+  const handleDownload = async (item) => {
+    setLoading(true)
+    await downloadRepo(item).finally(() => {
+      setLoading(false)
+    })
+  }
+
   const handleImport = async (item) => {
     setLoading(true)
-    await handleDownload(item)
+    await downloadRepo(item)
       .then(async (res) => {
         if (res.status === 'success') {
           const newMap = { ...statusMap, [item.id]: { status: 'importing', message: '导入中...' } }
