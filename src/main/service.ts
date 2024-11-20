@@ -71,9 +71,15 @@ export const getConfig = () => {
       targetRequest.defaults.headers.common['x-csrf-token'] = store.targetCtoken
       targetRequest.defaults.headers.common['Referer'] = store.targetDomain
     }
+
     return config
   } catch (error) {
-    return {}
+    return {
+      domain: 'https://aliyuque.antfin.com',
+      token: 'ALIPAYCHAIRBUCJSESSIONID',
+      targetDomain: 'https://terminuscloud.yuque.com',
+      targetToken: '_yuque_session'
+    }
   }
 }
 

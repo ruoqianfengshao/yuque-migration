@@ -12,7 +12,7 @@ import {
 } from '../service'
 import { ProgressItem } from './type'
 import path from 'node:path'
-import { createTocMap, fixPath } from './utils'
+import { createTocMap } from './utils'
 
 /**
  * 导入的思路大概是这样
@@ -40,9 +40,9 @@ export const importBook = async ({ group, book }) => {
     const repos = await getTargetRepos(groupId)
 
     const isExistBook = repos.data[0].books?.find((i) => i.name === book.name)
-
+    let newBook
     if (!isExistBook) {
-      const newBook = await createBook({ groupId, name: book.name })
+      newBook = await createBook({ groupId, name: book.name })
       bookId = newBook.data.id
     } else {
       bookId = isExistBook.id

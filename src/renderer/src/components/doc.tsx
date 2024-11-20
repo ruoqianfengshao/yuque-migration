@@ -25,7 +25,7 @@ export const useDocDrawer = () => {
           </Text>
         </Paragraph>
         <Paragraph>
-          <Text>2. 当前版本（1.2.0）不支持视频自动上传，连接内网后，会把视频下载到本地目录</Text>
+          <Text>2. 当前版本（1.3.0）不支持视频自动上传，连接内网后，会把视频下载到本地目录</Text>
         </Paragraph>
         <Paragraph>
           <Text>
@@ -37,7 +37,7 @@ export const useDocDrawer = () => {
         <Paragraph>
           <Text>
             4. 因为语雀
-            API实现，部分文档标题的特殊字符会被转义，建议提前对标题中的特殊字符进行处理，如&,/,&lt;,&gt;等字符串
+            API实现，部分文档标题的特殊字符会被转义，建议提前对标题中的特殊字符进行处理，如&lt;,&gt;等字符串
           </Text>
         </Paragraph>
         <Paragraph>
@@ -47,16 +47,13 @@ export const useDocDrawer = () => {
           </Text>
         </Paragraph>
         <Paragraph>
-          <Text>
-            6.
-            通过本工具下载到系统下载目录中的知识库内容在确保不需要以后可以删除，上传会基于本地已下载的内容进行上传
-          </Text>
+          <Text>6. 当前版本（1.3.0）不支持团队中的资源库下载和迁移</Text>
         </Paragraph>
         <Paragraph>
-          <Text>7. 当前版本（1.2.0）会把空内容文档创建出来，不会自动识别草稿内容</Text>
+          <Text>7. 当前版本（1.3.0）会把空内容文档创建出来，不会自动识别草稿内容</Text>
         </Paragraph>
         <Paragraph>
-          <Text>8. 当前版本（1.2.0）会把链接节点原样创建出来，不会处理链接对应内容</Text>
+          <Text>8. 当前版本（1.3.0）会把链接节点原样创建出来，不会处理链接对应内容</Text>
         </Paragraph>
         <Paragraph>
           <Text>9. 有其他使用问题，请联系王凯凯（笑武）</Text>

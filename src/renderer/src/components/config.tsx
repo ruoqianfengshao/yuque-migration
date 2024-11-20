@@ -21,13 +21,6 @@ export const useConfigModal = (props: ConfigModalProps) => {
     setTimeout(() => {
       if (config) {
         form.setFieldsValue(config)
-      } else {
-        form.setFieldsValue({
-          domain: 'https://aliyuque.antfin.com',
-          token: 'ALIPAYCHAIRBUCJSESSIONID',
-          targetDomain: 'https://terminuscloud.yuque.com',
-          targetToken: '_yuque_session'
-        })
       }
     }, 500)
   }
@@ -35,7 +28,6 @@ export const useConfigModal = (props: ConfigModalProps) => {
   const handleOk = () => {
     form.validateFields().then((values) => {
       onOk?.(values)
-      console.log('values', values)
       setOpen(false)
     })
   }
