@@ -18,7 +18,7 @@ jobs:
         run: |
           npm install - g pnpm
           echo $PATH
-          pnpm install --no-frozen-lockfile
+          npx pnpm install --no-frozen-lockfile
       - name: Build Electron application for Mac
         run: |
           npx pnpm build:mac
