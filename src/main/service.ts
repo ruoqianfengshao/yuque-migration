@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import { Toc } from './import/type'
 import path from 'node:path'
 import { fixPath } from './import/utils'
+import { BoardExportType, DocExportType, SheetExportType, TableExportType } from './export/types'
 
 type Store = {
   domain?: string
@@ -75,9 +76,9 @@ export const getConfig = () => {
     return config
   } catch (error) {
     return {
-      domain: 'https://aliyuque.antfin.com',
-      token: 'ALIPAYCHAIRBUCJSESSIONID',
-      targetDomain: 'https://terminuscloud.yuque.com',
+      domain: 'https://www.yuque.com',
+      token: '_yuque_session',
+      targetDomain: 'https://www.yuque.com',
       targetToken: '_yuque_session'
     }
   }
@@ -122,17 +123,17 @@ export const downloadRepos = async (repo: Record<string, any>) => {
   const repoUrl = `${store.domain}/${repo.user.login}/${repo.slug}`
   const downloadPath = `${app.getPath('downloads')}/${repo.user.name}`
   try {
-    const { main: yuque } = await import('@terminus/yuque-dl')
+    const { main: yuque } = await import('./export')
     await yuque(repoUrl, {
       distDir: downloadPath,
       ignoreImg: false,
       toc: true,
       key: store.token,
       token: store.value,
-      docExportType: 'lake',
-      boardExportType: 'lakeboard',
-      sheetExportType: 'lakesheet',
-      tableExportType: 'laketable',
+      docExportType: DocExportType.lake,
+      boardExportType: BoardExportType.lakeboard,
+      sheetExportType: SheetExportType.lakesheet,
+      tableExportType: TableExportType.laketable,
       ctoken: store.ctoken
     })
     return { message: `已下载至 下载/${repo.user.name}/${repo.name}`, status: 'success' }

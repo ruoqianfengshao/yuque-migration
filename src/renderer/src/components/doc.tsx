@@ -50,13 +50,10 @@ export const useDocDrawer = () => {
           <Text>6. 当前版本（1.3.0）不支持团队中的资源库下载和迁移</Text>
         </Paragraph>
         <Paragraph>
-          <Text>7. 当前版本（1.3.0）会把空内容文档创建出来，不会自动识别草稿内容</Text>
+          <Text>7. 当前版本（1.3.0）会把空内容文档创建出来，不会加载草稿内容</Text>
         </Paragraph>
         <Paragraph>
           <Text>8. 当前版本（1.3.0）会把链接节点原样创建出来，不会处理链接对应内容</Text>
-        </Paragraph>
-        <Paragraph>
-          <Text>9. 有其他使用问题，请联系王凯凯（笑武）</Text>
         </Paragraph>
         <Title level={3}>开始使用</Title>
         <Paragraph>

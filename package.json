@@ -5,6 +5,8 @@
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
+  "type": "module",
+  "license": "ISC",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
@@ -28,7 +30,16 @@
     "adm-zip": "^0.5.16",
     "antd": "^5.20.6",
     "axios": "^1.7.7",
-    "electron-updater": "^6.1.7"
+    "cli-progress": "^3.12.0",
+    "electron-updater": "^6.1.7",
+    "log4js": "^6.9.1",
+    "markdown-toc": "^1.2.0",
+    "mdast-util-from-markdown": "^2.0.1",
+    "mdast-util-to-markdown": "^2.1.0",
+    "ora": "^7.0.1",
+    "pako": "1.0.11",
+    "pull-md-img": "^0.0.60",
+    "rand-user-agent": "1.0.109"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
