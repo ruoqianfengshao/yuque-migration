@@ -17,10 +17,11 @@ jobs:
       - name: Install dependencies with pnpm
         run: |
           npm install - g pnpm
-          pnpm install
+          echo $PATH
+          npx pnpm install
       - name: Build Electron application for Mac
         run: |
-          pnpm build:mac
+          npx pnpm build:mac
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -36,6 +37,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/yuque - migration - ${{ github.run_number }} - universal - mac.zip
-          asset_name: yuque - migration - ${{ github.run_number }} - universal - mac.zip
+          asset_path: dist/yuque-migration-${{github.run_number}}-universal-mac.zip
+          asset_name: yuque-migration-${{github.run_number}}-universal-mac.zip
           asset_content_type: application/zip
