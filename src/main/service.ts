@@ -303,7 +303,7 @@ export const uploadLakeFile = async ({
   if (fileContent.length) {
     const fileBlob = new Blob([fileContent], { type: 'text/plain' })
     formData.append('file', fileBlob, filename!)
-    console.log(filename, targetUuid, createFrom)
+
     return targetRequest.post(`/api/import?ctoken=${store.ctoken}`, formData).then(async (doc) => {
       return getBookToc(bookId).then((res) => {
         const toc = res.data.toc.find((i) => {
