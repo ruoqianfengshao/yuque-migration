@@ -26,7 +26,6 @@
     "@ant-design/icons": "^5.5.1",
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
-    "@terminus/yuque-dl": "1.0.71-beta.1",
     "adm-zip": "^0.5.16",
     "antd": "^5.20.6",
     "axios": "^1.7.7",
