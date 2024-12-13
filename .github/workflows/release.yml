@@ -1,7 +1,7 @@
 name: Electron Build and Release for Mac
 on:
   push:
-    tags:
+    branches:
       - 'v*' # 当推送以v开头的标签时触发工作流
 
 jobs:
