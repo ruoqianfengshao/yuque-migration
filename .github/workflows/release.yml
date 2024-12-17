@@ -38,6 +38,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/yuque-migration-${{github.run_number}}-universal-mac.zip
-          asset_name: yuque-migration-${{github.run_number}}-universal-mac.zip
+          asset_path: dist/yuque-migration-${{github.ref_name}}-universal-mac.zip
+          asset_name: yuque-migration-${{github.ref_name}}-universal-mac.zip
           asset_content_type: application/zip
