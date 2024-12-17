@@ -16,12 +16,12 @@ jobs:
           node-version: '20'
       - name: Install dependencies with pnpm
         run: |
-          npm install - g pnpm
+          npm install -g pnpm
           echo $PATH
-          npx pnpm install --no-frozen-lockfile
+          pnpm install --no-frozen-lockfile
       - name: Build Electron application for Mac
         run: |
-          npx pnpm build:mac
+          pnpm build:mac
       - name: Create Release
         uses: actions/create-release@v1
         env:
