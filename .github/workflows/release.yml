@@ -46,3 +46,5 @@ jobs:
           asset_path: dist/yuque-migration-${{steps.get_version.outputs.version}}-universal-mac.zip
           asset_name: yuque-migration-${{steps.get_version.outputs.version}}-universal-mac.zip
           asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
