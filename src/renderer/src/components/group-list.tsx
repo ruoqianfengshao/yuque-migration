@@ -1,6 +1,7 @@
-import { List, Spin } from 'antd'
+import { List, Space, Spin } from 'antd'
 import { useEffect, useState } from 'react'
 import { useConfigInfoContext } from './context'
+import { GroupIcon } from '@renderer/icons/group'
 
 type GroupListProps = {
   onClick?: (data) => void
@@ -29,6 +30,7 @@ export const GroupList = (props: GroupListProps) => {
   return (
     <Spin spinning={loading}>
       <List
+        className="group-list"
         header={<div className="group-header">当前拥有团队</div>}
         bordered
         dataSource={data}
@@ -37,7 +39,10 @@ export const GroupList = (props: GroupListProps) => {
             className={currentGroupId === item.id ? 'group-item-active' : ''}
             onClick={() => onClick?.(item)}
           >
-            {item.name}
+            <Space>
+              <GroupIcon />
+              {item.name}
+            </Space>
           </List.Item>
         )}
       />

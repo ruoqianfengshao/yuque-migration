@@ -51,10 +51,10 @@ function App(): JSX.Element {
       />
       <br></br>
       <Row gutter={12}>
-        <Col span={12}>
+        <Col span={10}>
           <GroupList currentGroupId={group?.id} onClick={handleGroupClick}></GroupList>
         </Col>
-        <Col span={12}>
+        <Col span={14}>
           <RepoList groupId={group?.id} groupName={group?.name}></RepoList>
         </Col>
       </Row>

@@ -1,7 +1,14 @@
-.ant-list-items {
+.group-list .ant-list-items {
   overflow: auto;
-  height: 400px;
+  max-height: 400px;
 }
+
+.repo-list .ant-list-items {
+  overflow: auto;
+  max-height: 400px;
+}
+
+
 
 .group-item-active {
   background-color: #11b86d;

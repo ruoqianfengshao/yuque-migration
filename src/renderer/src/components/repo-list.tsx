@@ -1,11 +1,11 @@
 import {
   CheckCircleTwoTone,
   ExclamationCircleTwoTone,
-  FolderOutlined,
   LoadingOutlined,
   CloudSyncOutlined,
   DownloadOutlined
 } from '@ant-design/icons'
+import { BookIcon } from '@renderer/icons/book'
 import { Button, List, Space, Spin, Tooltip } from 'antd'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -65,7 +65,7 @@ export const RepoList = (props: RepoListProps) => {
     if (status === 'uploaded') {
       return <CheckCircleTwoTone twoToneColor="#52c41a" style={{ fontSize: 30 }} />
     }
-    return <FolderOutlined style={{ fontSize: 30 }} />
+    return <BookIcon />
   }
 
   const handleDownloadAll = async () => {
@@ -168,6 +168,7 @@ export const RepoList = (props: RepoListProps) => {
   return (
     <Spin spinning={loading}>
       <List
+        className="repo-list"
         header={
           <div className="repo-header">
             <span>所属团队知识库</span>
